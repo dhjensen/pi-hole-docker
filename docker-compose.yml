@@ -1,0 +1,31 @@
+name: Pihole
+
+services:
+  pihole:
+    image: pihole/pihole:${PIHOLE_VERSION}
+    container_name: pihole
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - pihole-etc:/etc/pihole:rw
+    environment:
+      - FTLCONF_webserver_api_password=${PIHOLE_PASSWORD}
+      - FTLCONF_dns_listeningMode=all
+      - FTLCONF_dns_upstreams=${PIHOLE_DNS_UPSTREAM}
+    ports:
+      - "0.0.0.0:53:53/tcp"
+      - "0.0.0.0:53:53/udp"
+      - "127.0.0.1:8025:80/tcp"
+      - "127.0.0.1:8026:443/tcp"
+    networks:
+      - nginx-proxy-manager_frontend
+    restart: unless-stopped
+    labels:
+      - wud.tag.include=^\d+\.\d+\.\d+$$
+
+networks:
+  nginx-proxy-manager_frontend:
+    driver: bridge
+    external: true
+
+volumes:
+  pihole-etc:
