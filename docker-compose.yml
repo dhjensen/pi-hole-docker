@@ -23,6 +23,8 @@ services:
     labels:
       - wud.tag.include=^\d+\.\d+\.\d+$$
       - traefik.enable=true
+      - traefik.http.routers.pihole-pihole.rule=Host(`pihole.dhjensen.tech`)
+      - traefik.http.services.pihole-pihole.Loadbalancer.server.port=8025
 
 networks:
   backend:
