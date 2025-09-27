@@ -23,8 +23,11 @@ services:
     labels:
       - wud.tag.include=^\d+\.\d+\.\d+$$
       - traefik.enable=true
-      - traefik.http.routers.pihole-pihole.rule=Host(`pihole.dhjensen.tech`)
-      - traefik.http.services.pihole-pihole.Loadbalancer.server.port=8025
+      - traefik.http.middlewares.redirect-to-admin.redirectregex.regex=^https://pihole.dhjensen.tech/$
+      - traefik.http.middlewares.redirect-to-admin.redirectregex.replacement=https://pihole.dhjensen.tech/admin
+      - traefik.http.middlewares.redirect-to-admin.redirectregex.permanent=true
+      - traefik.http.routers.pihole-pihole.middlewares=redirect-to-admin@docker
+      - traefik.http.services.pihole-pihole.Loadbalancer.server.port=80
 
 networks:
   backend:
