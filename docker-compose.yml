@@ -17,12 +17,17 @@ services:
       - "127.0.0.1:8025:80/tcp"
       - "127.0.0.1:8026:443/tcp"
     networks:
+      - backend
       - nginx-proxy-manager_frontend
     restart: unless-stopped
     labels:
       - wud.tag.include=^\d+\.\d+\.\d+$$
+      - traefik.enable=true
 
 networks:
+  backend:
+    external: true
+    driver: bridge
   nginx-proxy-manager_frontend:
     driver: bridge
     external: true
