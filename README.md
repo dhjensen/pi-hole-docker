@@ -5,7 +5,7 @@
 ## .env example
 
 ```bash
-PIHOLE_VERSION=version
+PIHOLE_DNS_UPSTREAM="8.8.8.8;8.8.4.4"
 PIHOLE_PASSWORD=password
-PIHOLE_DNS_UPSTREAM="dns server"
+PIHOLE_VERSION=2025.10.3
 ```
